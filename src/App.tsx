@@ -82,7 +82,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>React Redux TypeScript Todo list</h1>
+            <h1>React Todo list</h1>
             <AddTodoForm
                 handleTodoInput={handleTodoInput}
                 todoInputText={todoText}
