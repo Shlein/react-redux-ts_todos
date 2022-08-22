@@ -5,6 +5,7 @@
     margin-bottom: 20px;
 }
 
-.todoLeft {
+.activeTodosAmount {
     align-self: end;
+    margin-bottom: 15px;
 }

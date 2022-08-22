@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import styles from './FilterButton.module.css'
+import React from 'react';
 
 interface IFilterButtonProps extends React.HTMLProps<HTMLButtonElement>{
-    handleClick: (text: string) => void,
+    handleClick: any,
 }
 
 const FilterButton: React.FC<IFilterButtonProps> = ({handleClick, children}) => {
 
+
     return (
         <button
-            onClick={() => handleClick(String(children))}
+            onClick={handleClick}
         >
             {children}
         </button>

@@ -1,17 +1,30 @@
 import React from 'react';
-import {ITodo} from "../../types/types";
-import {TodoItem} from "../TodoItem/TodoItem";
+import { ITodo } from "../../types/types";
+import { TodoItem } from "../TodoItem/TodoItem";
 import styles from './TodoList.module.css'
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {FilterButton} from "../FilterButton/FilterButton";
+import {showActiveTodos, showAllTodos, showCompletedTodos} from "../../store/slices/todoSlice";
 
 interface ITodoListProps {
-    todos: ITodo[],
-    handleCompleteButton: (id: string) => void,
 }
 
 const TodoList: React.FC<ITodoListProps> = (props) => {
 
-    function todosLeft() {
-        return props.todos.reduce((prev: number, value: ITodo): number => {
+    const {
+        todos,
+        completedTodos,
+        activeTodos,
+        showCompleted,
+        showActive,
+    } = useAppSelector(state => state.todos);
+
+    let todosToRender: ITodo[];
+
+    const dispatch = useAppDispatch();
+
+    function activeTodosAmount() {
+        return todos.reduce((prev: number, value: ITodo): number => {
             if (!value.isCompleted) {
                 prev += 1
             }
@@ -19,24 +32,48 @@ const TodoList: React.FC<ITodoListProps> = (props) => {
         }, 0)
     }
 
+    if (showActive) {
+        todosToRender = activeTodos
+    } else if (showCompleted) {
+        todosToRender = completedTodos
+    } else {
+        todosToRender = todos
+    }
+
     return (
         <div className={styles.container}>
             {
-                props.todos.map((todo: ITodo) => (
+                todosToRender.map((todo) => (
                     <TodoItem
                         key={todo.id}
                         id={todo.id}
                         text={todo.text}
                         isCompleted={todo.isCompleted}
-                        handleCompleteButton={props.handleCompleteButton}
                     />
                 ))
             }
+
             <span
-                className={styles.todoLeft}
+                className={styles.activeTodosAmount}
             >
-                {todosLeft()} todos left
+                {activeTodosAmount()} todos left
             </span>
+
+            <div>
+                <div>
+                    <FilterButton handleClick={() => dispatch(showAllTodos())}>
+                        All
+                    </FilterButton >
+
+                    <FilterButton handleClick={() => dispatch(showActiveTodos())}>
+                        Active
+                    </FilterButton>
+
+                    <FilterButton handleClick={() => dispatch(showCompletedTodos())}>
+                        Completed
+                    </FilterButton>
+                </div>
+            </div>
         </div>
     )
 }
