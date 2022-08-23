@@ -36,8 +36,23 @@ const todoSlice = createSlice({
 			state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
 		},
 		toggleTodo: (state, action: PayloadAction<{id: string}>) => {
-			let index = state.todos.findIndex(todo => todo.id === action.payload.id);
-			state.todos[index].isCompleted = !state.todos[index].isCompleted;
+			state.todos.forEach(todo => {
+				if (todo.id === action.payload.id) {
+					todo.isCompleted = !todo.isCompleted;
+				}
+			})
+			state.completedTodos.forEach(todo => {
+				if (todo.id === action.payload.id) {
+					todo.isCompleted = !todo.isCompleted;
+					state.completedTodos = state.todos.filter(todo => todo.isCompleted)
+				}
+			})
+			state.activeTodos.forEach(todo => {
+				if (todo.id === action.payload.id) {
+					todo.isCompleted = !todo.isCompleted;
+					state.activeTodos = state.todos.filter(todo => !todo.isCompleted)
+				}
+			})
 		},
 		showAllTodos: (state) => {
 			state.filterValue = 'all';
@@ -47,7 +62,6 @@ const todoSlice = createSlice({
 		},
 		showCompletedTodos: (state) => {
 			state.completedTodos = state.todos.filter(todo => todo.isCompleted);
-
 			state.filterValue = 'completed';
 			state.showAll = false;
 			state.showActive = false;
@@ -55,7 +69,6 @@ const todoSlice = createSlice({
 		},
 		showActiveTodos: (state) => {
 			state.activeTodos = state.todos.filter(todo => !todo.isCompleted);
-
 			state.filterValue = 'active';
 			state.showAll = false;
 			state.showActive = true;

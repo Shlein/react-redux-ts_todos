@@ -9,3 +9,11 @@
     align-self: end;
     margin-bottom: 15px;
 }
+
+.filterButton {
+    background-color: lightcyan;
+}
+
+.active {
+    background-color: green;
+}

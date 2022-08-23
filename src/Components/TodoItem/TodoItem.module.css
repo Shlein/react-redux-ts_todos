@@ -9,6 +9,16 @@
     margin-bottom: 10px;
 }
 
-.remove-btn {
-    border-radius: 50%;
+.rightFeatures {
+    display: flex;
+    align-items: center;
+}
+
+.rightFeatures > button {
+    margin-right: 15px;
+}
+
+.removeIcon {
+    cursor: pointer;
+    padding: 5px;
 }

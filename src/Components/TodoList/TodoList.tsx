@@ -2,9 +2,10 @@ import React from 'react';
 import { ITodo } from "../../types/types";
 import { TodoItem } from "../TodoItem/TodoItem";
 import styles from './TodoList.module.css'
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {FilterButton} from "../FilterButton/FilterButton";
-import {showActiveTodos, showAllTodos, showCompletedTodos} from "../../store/slices/todoSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { FilterButton } from "../FilterButton/FilterButton";
+import { showActiveTodos, showAllTodos, showCompletedTodos } from "../../store/slices/todoSlice";
+import style from './TodoList.module.css';
 
 interface ITodoListProps {
 }
@@ -17,6 +18,7 @@ const TodoList: React.FC<ITodoListProps> = (props) => {
         activeTodos,
         showCompleted,
         showActive,
+        showAll,
     } = useAppSelector(state => state.todos);
 
     let todosToRender: ITodo[];
@@ -56,20 +58,29 @@ const TodoList: React.FC<ITodoListProps> = (props) => {
             <span
                 className={styles.activeTodosAmount}
             >
-                {activeTodosAmount()} todos left
+                {activeTodosAmount()} active todos left
             </span>
 
             <div>
                 <div>
-                    <FilterButton handleClick={() => dispatch(showAllTodos())}>
+                    <FilterButton
+                        className={`${style.filterButton} ${showAll ? style.active : ''}`}
+                        handleClick={() => dispatch(showAllTodos())}
+                    >
                         All
                     </FilterButton >
 
-                    <FilterButton handleClick={() => dispatch(showActiveTodos())}>
+                    <FilterButton
+                        className={`${style.filterButton} ${showActive ? style.active : ''}`}
+                        handleClick={() => dispatch(showActiveTodos())}
+                    >
                         Active
                     </FilterButton>
 
-                    <FilterButton handleClick={() => dispatch(showCompletedTodos())}>
+                    <FilterButton
+                        className={`${style.filterButton} ${showCompleted ? style.active : ''}`}
+                        handleClick={() => dispatch(showCompletedTodos())}
+                    >
                         Completed
                     </FilterButton>
                 </div>
