@@ -34,6 +34,8 @@ const todoSlice = createSlice({
 		},
 		removeTodo: (state, action: PayloadAction<{id: string}>) => {
 			state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
+			state.completedTodos = state.todos.filter(todo => todo.isCompleted);
+			state.activeTodos = state.todos.filter(todo => !todo.isCompleted)
 		},
 		toggleTodo: (state, action: PayloadAction<{id: string}>) => {
 			state.todos.forEach(todo => {
