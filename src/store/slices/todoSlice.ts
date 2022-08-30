@@ -88,9 +88,4 @@ export const {
 	showCompletedTodos
 } = todoSlice.actions
 
-// export const selectFilterValue = state => state.filterValue;
-// export const selectAllTodos = state => state.todos;
-// export const selectCompletedTodos = state => state.completedTodos;
-// export const selectActiveTodos = state => state.activeTodos;
-
 export default todoSlice.reducer
